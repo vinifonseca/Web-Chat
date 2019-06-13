@@ -1,0 +1,27 @@
+<div class="container">
+    <a href="https://github.com/vinifonseca/Web-Chat">
+      <img src="../assets/icons/git-hub.svg" class="git-icon">
+    </a>
+  <div class="header">
+      <i class="fa fa-github" style="font-size:36px"></i>
+    <input placeholder="Your name here" type="text" (change)="setUser($event)" class="msg-input">
+  </div>
+  <div *ngIf="!!sender" #viewer class="body">
+    <div class="viewer">
+      <div class="message" *ngFor="let msg of serverMessages" [ngClass]="{'others': !isMine(msg)}">
+        <div class="badge" [style.backgroundColor]="getSenderColor(msg.uid)">{{ getSenderInitials(msg.sender) }}</div>
+        <div class="content" [ngClass]="{'others': msg.uid == currentUID}">        
+          {{ msg.content }}
+        </div>
+      </div>    
+    </div>
+  </div>
+  <div *ngIf="!!sender" class="footer">
+    <form (submit)="send()">
+      <input class="msg-input" placeholder="Write a message" type="text" [(ngModel)]="clientMessage" [ngModelOptions]="{standalone: true}">
+      <button mat-fab type="submit" class="send-btn">
+        <i class="material-icons">Send</i>
+      </button>    
+    </form>
+  </div>
+</div>
